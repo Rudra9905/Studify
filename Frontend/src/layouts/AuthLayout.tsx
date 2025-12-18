@@ -1,0 +1,29 @@
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import { Logo } from '../components/ui/Logo';
+
+export const AuthLayout: React.FC = () => {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-slate-50 to-primary-50 px-4">
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-3 flex justify-center">
+            <Logo size="lg" showText={false} />
+          </div>
+          <h1 className="text-xl font-semibold tracking-tight text-blue-900">
+            Studify
+          </h1>
+          <p className="mt-1 text-sm text-slate-500">
+            A calm, focused space for teachers and students.
+          </p>
+        </div>
+        <div className="rounded-2xl bg-white p-6 shadow-soft ring-1 ring-slate-100">
+          <Outlet />
+        </div>
+        <p className="mt-4 text-center text-xs text-slate-400">
+          Built for modern classrooms · <Link to="/" className="text-primary-600 hover:text-primary-700">Back to app</Link>
+        </p>
+      </div>
+    </div>
+  );
+};

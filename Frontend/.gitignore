@@ -1,0 +1,59 @@
+### Java / Maven ###
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+**/src/main/**/target/
+**/src/test/**/target/
+
+### Spring Boot ###
+*.log
+*.tmp
+*.bak
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Node / React ###
+node_modules/
+frontend/node_modules/
+frontend/node_modules/.vite/
+
+### Env Files ###
+.env
+*.env
+*.env.*
+
+### Build Artifacts ###
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+### System Files ###
+.DS_Store
+
+### Uploads (if generated at runtime) ###
+uploads/
+
