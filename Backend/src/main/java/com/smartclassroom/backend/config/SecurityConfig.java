@@ -39,39 +39,39 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/auth/**",
-                                "/actuator/health",
-                                "/actuator/info",
-                                "/ws/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                );
-               // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(session ->
+            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(
+                "/api/auth/**",
+                "/actuator/**",
+                "/ws/**"
+            ).permitAll()
+            .anyRequest().authenticated()
+        );
 
-        return http.build();
-    }
+    return http.build();
+}
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(resolveAllowedOrigins());
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("Authorization"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(Duration.ofHours(1));
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(resolveAllowedOrigins());
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setExposedHeaders(List.of("Authorization"));
+    configuration.setAllowCredentials(true);
+    configuration.setMaxAge(Duration.ofHours(1));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
 
     private List<String> resolveAllowedOrigins() {
         List<String> origins = Arrays.stream(corsOrigins.split(","))
